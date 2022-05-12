@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.el-sub-menu .el-menu-item {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 45px;
+    min-width: 100px;
+}
+
+/*设置表头的颜色*/
+.headerBag{
+    background: #edf1f4 !important;
+}
+
+/*页签的颜色*/
+.el-breadcrumb__inner.is-link  {
+    color: #ffffff;
+}
