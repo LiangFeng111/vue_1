@@ -95,7 +95,6 @@ export default {
             request.post("user/login", this.form).then(res => {
               if (res.code === '200') {
                 this.message("登录成功", 'success')
-                console.log(res)
                 sessionStorage.setItem("user",JSON.stringify(res.data))
                 this.$router.push("/")//登录跳转到主页
               } else {
@@ -141,7 +140,7 @@ export default {
   box-sizing: border-box;
   /*box-sizing设置盒子模型的解析模式为怪异盒模型，
   将border和padding划归到width范围内*/
-  box-shadow: 0px 15px 25px rgba(0, 0, 0, .5);
+  box-shadow: 0px 15px 25px rgba(22, 20, 20, 0.5);
   /*边框阴影  水平阴影0 垂直阴影15px 模糊25px 颜色黑色透明度0.5*/
   border-radius: 15px;
   /*边框圆角，四个角均为15px*/

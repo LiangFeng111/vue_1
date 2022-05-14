@@ -20,6 +20,17 @@ const routes = [
                 name: '用户管理',
                 component: User
             },
+            {
+                path: 'person',
+                name: '个人信息',
+                component: ()=>import("@/views/Person")
+            },
+            {
+                path: 'file',
+                name: '文件管理',
+                component: ()=>import("@/views/File")
+            },
+
         ]
     },
     {

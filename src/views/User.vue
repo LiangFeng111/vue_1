@@ -236,7 +236,6 @@ export default {
       console.log(res)
     },
     load() {
-      console.log(this.value)
       request.get("/user/page", {
         params:{
           pageNum: this.currentPage,
@@ -245,8 +244,13 @@ export default {
           option :this.value
         }
       }).then(res => {
-        this.tableData=res.data.data
-        this.total = res.data.total
+        if (res.code === '200'){
+          this.tableData=res.data.data
+          this.total = res.data.total
+        }else {
+          this.message(res.msg,'error')
+        }
+
         this.loading=false
       })
     },
@@ -275,6 +279,8 @@ export default {
         request.put("/user", this.form).then(res => {
           if (res.code === '200') {
             this.message("修改成功",'success')
+            //触发父级更新user
+            this.$emit("refreshUser")
           }else {
             this.message(res.msg,'error')
           }

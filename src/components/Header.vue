@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div style="width: 100px;text-align: center;margin-right: 20px">
+      <div style="text-align: center;margin-right: 20px">
         <el-image
             style="width: 30px; height: 30px ;margin-top: 10px; margin-right: 1px; border-radius: 30px;"
             :src="user.headImg"
@@ -23,7 +23,7 @@
             fit="cover"
             preview-teleported="true"
         />
-        <el-dropdown style="line-height: 50px;">
+        <el-dropdown style="line-height: 50px;margin-left: 5px">
           <span style="color:#fff;">{{user.nickName}}</span>
         <span class="el-dropdown-link">
           <el-icon style="color: white"><arrow-down /></el-icon>
@@ -44,17 +44,12 @@
 <script>
   export default {
     name:"Header",
+    props:{
+      user: Object
+    },
     data(){
       return{
-        user:"",
         currentPathName:'',
-      }
-    },
-    created() {
-      let u =JSON.parse(sessionStorage.getItem("user"))
-      if (u!=null){
-        this.user=u
-        console.log(u.headImg)
       }
     },
     watch:{
