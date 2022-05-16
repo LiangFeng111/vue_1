@@ -30,6 +30,11 @@ const routes = [
                 name: '文件管理',
                 component: ()=>import("@/views/File")
             },
+            {
+                path: 'role',
+                name: '角色管理',
+                component: ()=>import("@/views/Role")
+            },
 
         ]
     },

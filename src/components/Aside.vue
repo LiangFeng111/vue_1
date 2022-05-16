@@ -20,6 +20,7 @@
         <el-menu-item-group  title="选项">
           <el-menu-item  index="user" >用户管理</el-menu-item>
           <el-menu-item  index="file" >文件管理</el-menu-item>
+          <el-menu-item  index="role" >角色管理</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
     </el-menu>

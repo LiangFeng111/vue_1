@@ -33,10 +33,8 @@ export default {
     // 从后台获取数据
     getUser(){
       request.get('user/'+this.user.id).then(res=>{
-        let token = this.user.token
         this.user = res.data
-        this.user.token=token
-        sessionStorage.setItem("user",JSON.stringify(this.user))
+
       })
     }
   },
