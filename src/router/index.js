@@ -35,6 +35,11 @@ const routes = [
                 name: '角色管理',
                 component: ()=>import("@/views/Role")
             },
+            {
+                path: 'menu',
+                name: '菜单管理',
+                component: ()=>import("@/views/Menu")
+            },
 
         ]
     },

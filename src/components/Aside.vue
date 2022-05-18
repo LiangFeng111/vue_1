@@ -14,13 +14,14 @@
       </el-menu-item>
       <el-sub-menu  >
         <template #title>
-          <el-icon><grid /></el-icon>
+          <el-icon><Menu /></el-icon>
           <span>系统管理</span>
         </template>
         <el-menu-item-group  title="选项">
-          <el-menu-item  index="user" >用户管理</el-menu-item>
-          <el-menu-item  index="file" >文件管理</el-menu-item>
-          <el-menu-item  index="role" >角色管理</el-menu-item>
+          <el-menu-item  index="user" ><el-icon><Menu /></el-icon>用户管理</el-menu-item>
+          <el-menu-item  index="file" ><el-icon><Menu /></el-icon>文件管理</el-menu-item>
+          <el-menu-item  index="role" ><el-icon><Menu /></el-icon>角色管理</el-menu-item>
+          <el-menu-item  index="menu" ><el-icon><Menu /></el-icon>菜单管理</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
     </el-menu>
