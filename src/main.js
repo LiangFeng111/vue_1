@@ -23,12 +23,13 @@ rt.beforeEach((to, from, next) =>{
     // 会再次进入路由跳转，next()方法没有参数是直接进入页面，不会再次进入路由拦截，有参数则会，因为跳转，
     // 所以再次进入路由，再次判断，再次进入路由，再次判断，循环往复无限循环
     // 所以一定要加to.path !== 'login'的判断
-    if (!userJson && to.path !== '/login' && to.path !== '/register'){
-        next('/login')
-    }else {
-        localStorage.setItem("currentPathName" , to.name)
-        next()
-    }
+    // if (!userJson && to.path !== '/login' && to.path !== '/register' && to.path !== '/front' ){
+    //     next('/login')
+    // }else {
+    //     localStorage.setItem("currentPathName" , to.name)
+    //     next()
+    // }
+    next()
 })
 
 const app=createApp(App)

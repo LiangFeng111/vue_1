@@ -8,22 +8,32 @@
              text-color="#fff"
              @select="handleSelect"
              class="el-menu-vertical-demo">
-      <el-menu-item index="/home">
-        <el-icon><home-filled /></el-icon>
-        <span>主页</span>
-      </el-menu-item>
-      <el-sub-menu  >
-        <template #title>
-          <el-icon><Menu /></el-icon>
-          <span>系统管理</span>
-        </template>
-        <el-menu-item-group  title="选项">
-          <el-menu-item  index="user" ><el-icon><Menu /></el-icon>用户管理</el-menu-item>
-          <el-menu-item  index="file" ><el-icon><Menu /></el-icon>文件管理</el-menu-item>
-          <el-menu-item  index="role" ><el-icon><Menu /></el-icon>角色管理</el-menu-item>
-          <el-menu-item  index="menu" ><el-icon><Menu /></el-icon>菜单管理</el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
+
+      <div v-for="item in menus" :key="item.id">
+        <div v-if="item.path">
+          <el-menu-item :index="item.path">
+            <component :is="item.icon" style="width: 20px;height: 20px"/>
+            <span>{{item.name}}</span>
+          </el-menu-item>
+        </div>
+        <div v-else>
+          <el-sub-menu :index="item.id + ''" >
+            <template #title>
+              <component :is="item.icon" style="width: 20px;height: 20px"/>
+              <span>{{item.name}}</span>
+            </template>
+            <el-menu-item-group  title="选项">
+              <div v-for="subItem in item.children" :key="item.id">
+                <el-menu-item :index="subItem.path">
+                  <component :is="subItem.icon" style="width: 20px;height: 20px"/>
+                  <span>{{subItem.name}}</span>
+                </el-menu-item>
+              </div>
+
+            </el-menu-item-group>
+          </el-sub-menu>
+        </div>
+      </div>
     </el-menu>
   </div>
 </template>
@@ -34,10 +44,13 @@ import request from "@/utils/request";
 
 export default {
   name: "Aside",
+  props:{
+  },
   data(){
     return{
       user:{},
-      path:this.$route.path
+      path:this.$route.path,
+      menus: sessionStorage.getItem("menus") ? JSON.parse(sessionStorage.getItem("menus")) :[]
     }
   },
   created() {

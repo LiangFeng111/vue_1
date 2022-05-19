@@ -98,7 +98,7 @@
         <el-table-column align="center" width="230" fixed="right" label="操作">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-button type="info" @click="selectMenu(scope.row.id)">分配菜单</el-button>
+              <el-button type="info" @click="selectMenu(scope.row)">分配菜单</el-button>
               <el-button type="success" @click="handleEdit(scope.row)">编辑
                 <el-icon>
                   <edit/>
@@ -171,6 +171,7 @@ export default {
       expands:[],
       checks:[],
       roleId:0,
+      roleFlag:'',
 
     }
   },
@@ -269,6 +270,10 @@ export default {
           if (res.code === '200'){
             this.message("绑定成功!","success")
             this.menuDialogVis =false
+            // 操作管理员角色后需要重新登录
+            if (this.roleFlag === 'admin') {
+              this.$store.commit("logout")
+            }
           }else {
             this.message(res.msg,"error")
           }
@@ -291,10 +296,6 @@ export default {
       this.title = "修改角色信息"
       this.form = JSON.parse(JSON.stringify(row))
       this.centerDialogVisible = true
-      //表单元素创建之后加载
-      this.$nextTick(() => {
-        this.$refs['upload'].clearFiles() //清除头像文件列表
-      })
 
     },
     //删除触发
@@ -310,17 +311,30 @@ export default {
     },
 
     //请求菜单数据
-    selectMenu(roleId) {
-      this.menuDialogVis = true
-      this.roleId= roleId
+    selectMenu(role) {
+      this.roleId= role.id
+      this.roleFlag = role.flag
       //请求菜单
       request.get("/menu").then(res => {
         this.menuData = res.data
+        //把后台传来的菜单数据处理成数组
         this.expands=this.menuData.map(v=>v.id)
       })
       //请求菜单
-      request.get("/role/roleMenu/"+roleId).then(res => {
+      request.get("/role/roleMenu/"+this.roleId).then(res => {
         this.checks = res.data
+
+        request.get("/menu/ids").then(res=>{
+          const ids = res.data
+          ids.forEach(id=>{
+            if (!this.checks.includes(id)){
+              this.$nextTick(()=>{
+                this.$refs.treeRef.setChecked(id,false)
+              })
+            }
+          })
+        })
+        this.menuDialogVis = true
       })
     },
   },

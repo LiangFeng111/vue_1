@@ -60,6 +60,7 @@ import {ElMessage} from "element-plus";
 
 //验证码生成器
 import  ValidCode   from "@/components/ValidCode";
+import {setRoutes} from "@/router";
 
 export default {
   name: "Login",
@@ -95,8 +96,17 @@ export default {
             request.post("user/login", this.form).then(res => {
               if (res.code === '200') {
                 this.message("登录成功", 'success')
-                sessionStorage.setItem("user",JSON.stringify(res.data))
-                this.$router.push("/")//登录跳转到主页
+                sessionStorage.setItem("user",JSON.stringify(res.data)) //存储用户信息到浏览器
+                sessionStorage.setItem("menus",JSON.stringify(res.data.menus)) //存储菜单信息到浏览器
+                //动态设置当前用户的路由
+                setRoutes()
+
+                if (res.data.role==='user'){
+                  this.$router.push("/front/home")//登录跳转到主页
+                }else {
+                  this.$router.push("/")//登录跳转到主页
+                }
+
               } else {
                 this.message(res.msg, 'error')
               }

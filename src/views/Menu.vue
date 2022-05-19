@@ -33,6 +33,9 @@
           <el-form-item label="路径:">
             <el-input v-model="form.path" style="width: 80%"/>
           </el-form-item>
+          <el-form-item label="页面路径:">
+            <el-input v-model="form.pagePath" style="width: 80%"/>
+          </el-form-item>
           <el-form-item label="图标:">
             <el-select v-model="form.icon" style="width: 80%" placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.name" :value="item.value">
@@ -76,6 +79,7 @@
         <el-table-column fixed prop="id" label="ID" width="80" sortable/>
         <el-table-column align="center" fixed prop="name"  label="名称"/>
         <el-table-column align="center" fixed prop="path"  label="路径"/>
+        <el-table-column align="center" fixed prop="pagePath"  label="页面路径"/>
         <el-table-column align="center" fixed prop="icon"  label="图标">
           <template #default="scope">
             <component :is="scope.row.icon" style="width: 20px;height: 20px"/>
@@ -85,7 +89,7 @@
         <el-table-column align="center" width="260" fixed="right" label="操作">
           <template #default="scope">
             <div  style="text-align: center">
-              <el-button type="primary" @click="handleAdd(scope.row.id)" v-if="!scope.row.pid">新增子菜单<el-icon><edit /></el-icon></el-button>
+              <el-button type="primary" @click="handleAdd(scope.row.id)" v-if="!scope.row.pid && !scope.row.path">新增子菜单<el-icon><edit /></el-icon></el-button>
               <el-button type="success" @click="handleEdit(scope.row)">编辑<el-icon><edit /></el-icon></el-button>
               <el-popconfirm
                   confirm-button-text="确定"
@@ -179,17 +183,21 @@ export default {
       // 显示对话框
       this.centerDialogVisible = true
       //清空表单内容
-      this.form = {}//表单元素创建之后加载
-      this.$nextTick(()=>{
-        this.$refs['upload'].clearFiles() //清除头像文件列表
-      })
+      this.form = {}
+
     },
     handleAdd(pid){
+      this.title='新增子菜单'
       this.centerDialogVisible=true
       this.form={}
       if (pid){
         this.form.pid=pid
       }
+      //请求图标的数据
+      request.get("/menu/icons").then(res=>{
+        this.options= res.data
+      })
+
     },
     //提示信息
     message(msg,type){

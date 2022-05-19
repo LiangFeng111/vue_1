@@ -25,7 +25,6 @@
       <el-popconfirm
           confirm-button-text="确定"
           cancel-button-text="取消"
-          :icon="InfoFilled"
           icon-color="red"
           @confirm="deleteBatch"
           title="你确定要删除吗?">
@@ -52,6 +51,11 @@
           <el-form-item label="昵称:">
             <el-input v-model="form.nickName" style="width: 80%"/>
           </el-form-item>
+          <el-form-item label="角色:" >
+            <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 80%">
+              <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="头像:">
             <el-upload
                 ref="upload"
@@ -71,10 +75,7 @@
           <el-form-item label="地址:">
             <el-input v-model="form.address" type="textarea" style="width: 80%"/>
           </el-form-item >
-          <el-form-item label="管理员:" >
-            <el-radio v-model="form.role" :label='1'>管理员</el-radio>
-            <el-radio v-model="form.role" :label="2">普通用户</el-radio>
-          </el-form-item>
+
         </el-form>
 
         <template #footer>
@@ -113,17 +114,18 @@
           </template>
         </el-table-column>
         <el-table-column align="center" fixed prop="username" width="80" label="用户名"/>
-        <el-table-column align="center" prop="nickName" width="80" label="昵称"/>
-
-        <el-table-column align="center" prop="age" width="80" label="年龄"/>
-        <el-table-column align="center" prop="sex" width="80" label="性别"/>
-        <el-table-column align="center" prop="address"  label="地址"/>
         <el-table-column align="center" width="80" label="角色:">
           <template #default="scope">
             <span v-if="scope.row.role ==='admin'">管理员</span>
             <span v-if="scope.row.role ==='user'">普通用户</span>
           </template>
         </el-table-column>
+        <el-table-column align="center" prop="nickName" width="80" label="昵称"/>
+
+        <el-table-column align="center" prop="age" width="80" label="年龄"/>
+        <el-table-column align="center" prop="sex" width="80" label="性别"/>
+        <el-table-column align="center" prop="address"  label="地址"/>
+
         <el-table-column align="center" width="150" fixed="right" label="操作">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -202,6 +204,7 @@ export default {
       title:"", //表单标题
       ids:{},
       InfoFilled:InfoFilled,
+      roles:[],
     }
   },
   //created（）页面加载时调用的方法
@@ -250,7 +253,9 @@ export default {
         }else {
           this.message(res.msg,'error')
         }
-
+        request.get("/role",).then(res=>{
+          this.roles = res.data
+        })
         this.loading=false
       })
     },

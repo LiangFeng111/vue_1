@@ -42,6 +42,8 @@
 </template>
 
 <script>
+  import {ElMessage} from "element-plus";
+
   export default {
     name:"Header",
     props:{
@@ -59,9 +61,19 @@
     },
     methods:{
       exit(){
-        sessionStorage.removeItem("user")
-        this.$router.push("/login")
-      }
+        this.$store.commit("logout")
+        this.message("退出成功",'success')
+      },
+
+      //提示信息
+      message(msg,type){
+        ElMessage({
+          showClose: true,
+          message: msg,
+          type: type,
+          center: true,
+        })
+      },
     }
   }
 </script>

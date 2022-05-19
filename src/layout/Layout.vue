@@ -34,7 +34,6 @@ export default {
     getUser(){
       request.get('user/'+this.user.id).then(res=>{
         this.user = res.data
-
       })
     }
   },
