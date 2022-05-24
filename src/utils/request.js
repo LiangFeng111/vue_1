@@ -16,10 +16,6 @@ request.interceptors.request.use(config => {
         config.headers['token'] = user.token;  // 设置请求头
     }
 
-    // 取出sessionStorage里面的缓存信息
-    if (!user && config.url !=="user/register"){
-        router.push("/login")
-    }
     return config
 }, error => {
     return Promise.reject(error)
@@ -38,6 +34,14 @@ request.interceptors.response.use(
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }
+        // 当权限验证不通过的时候给出提示
+        // if (res.code === '401') {
+        //     // ElementUI.Message({
+        //     //     message: res.msg,
+        //     //     type: 'error'
+        //     // });
+        //     router.push("/login")
+        // }
         return res;
     },
     error => {

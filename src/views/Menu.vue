@@ -184,6 +184,10 @@ export default {
       this.centerDialogVisible = true
       //清空表单内容
       this.form = {}
+      //请求图标的数据
+      request.get("/menu/icons").then(res=>{
+        this.options= res.data
+      })
 
     },
     handleAdd(pid){

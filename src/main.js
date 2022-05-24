@@ -12,34 +12,22 @@ import locale from 'element-plus/es/locale/lang/zh-cn'
 //动态拦截器配置
 import  '@/utils/request'
 
-//全局拦截配置
-import rt from '@/router/index'
-// 这里就可以进行vue-router的beforeEach拦截了
-rt.beforeEach((to, from, next) =>{
-    //取出sessionStorage里面的缓存信息
-    let userJson=sessionStorage.getItem("user")
-    // 这里必须加上to.path !== 'login'的判断，不然会陷入无限循环，
-    // 因为逻辑是第一次进来，判断用户信息不存在，即!user为true，由于使用的是next('/login')而非next()，
-    // 会再次进入路由跳转，next()方法没有参数是直接进入页面，不会再次进入路由拦截，有参数则会，因为跳转，
-    // 所以再次进入路由，再次判断，再次进入路由，再次判断，循环往复无限循环
-    // 所以一定要加to.path !== 'login'的判断
-    // if (!userJson && to.path !== '/login' && to.path !== '/register' && to.path !== '/front' ){
-    //     next('/login')
-    // }else {
-    //     localStorage.setItem("currentPathName" , to.name)
-    //     next()
-    // }
-    next()
-})
+//视频播放组件
+import vue3videoPlay from "vue3-video-play"; // 引入组件
+import "vue3-video-play/dist/style.css"; // 引入css
+
+
 
 const app=createApp(App)
     app.use(store)
+
+
 //  统一注册el-icon图标
 for(let iconName in ElIconModules){
     app.component(iconName,ElIconModules[iconName])
 }
-    app.use(rt)
     app.use(router)
     app.use(ElementPlus,{locale, size:'small'})
+    app.use(vue3videoPlay);
     app.mount('#app')
 

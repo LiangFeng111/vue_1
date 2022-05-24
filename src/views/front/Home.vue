@@ -9,12 +9,17 @@
     </div>
     <div style="margin: 10px 0">
         <el-row :gutter="10">
-          <el-col :span="6" v-for="item in files" :key="item.id">
+          <el-col style="padding: 5px" :span="6" v-for="item in files" :key="item.id">
             <el-card>
-              <el-image :src="item.url"  />
+              <el-image :src="item.url" />
             </el-card>
-            <div style="padding: 10px 0">
-              <span>{{item.name}}</span>
+            <div style="padding: 10px ;border: 1px solid #ccc">
+              <div style="padding-bottom: 10px">
+                <span style="color:#df0e0e;">{{item.name}}</span>
+              </div>
+              <div>
+                <el-button type="primary">购买</el-button>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -43,7 +48,7 @@ export default {
       console.log(res.data.filter(v=> v.type ==='png' || v.type ==='jpg' || v.type === 'webp'))
       this.files= res.data.filter(v=> v.type ==='png' || v.type ==='jpg' || v.type === 'webp')
     })
-  }
+  },
 }
 </script>
 

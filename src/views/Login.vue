@@ -97,10 +97,9 @@ export default {
               if (res.code === '200') {
                 this.message("登录成功", 'success')
                 sessionStorage.setItem("user",JSON.stringify(res.data)) //存储用户信息到浏览器
-                sessionStorage.setItem("menus",JSON.stringify(res.data.menus)) //存储菜单信息到浏览器
+                localStorage.setItem("menus",JSON.stringify(res.data.menus)) //存储菜单信息到浏览器
                 //动态设置当前用户的路由
                 setRoutes()
-
                 if (res.data.role==='user'){
                   this.$router.push("/front/home")//登录跳转到主页
                 }else {

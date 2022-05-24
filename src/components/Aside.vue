@@ -50,7 +50,7 @@ export default {
     return{
       user:{},
       path:this.$route.path,
-      menus: sessionStorage.getItem("menus") ? JSON.parse(sessionStorage.getItem("menus")) :[]
+      menus: localStorage.getItem("menus") ? JSON.parse(localStorage.getItem("menus")) :[]
     }
   },
   created() {

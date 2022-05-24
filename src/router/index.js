@@ -2,8 +2,10 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Login from '@/views/Login';
 import Layout from '@/layout/Layout';
 import Register from '@/views/Register';
+import store from "@/store";
 
 const routes = [
+
     {
         path: '/login',
         name: 'Login',
@@ -14,26 +16,39 @@ const routes = [
         name: 'Register',
         component: Register
     },
+
+    {
+        path: '/404',
+        name: '404',
+        component: ()=>import('@/views/404')
+    },
     {
         path: '/front',
         name: 'Front',
-        component: ()=>import("@/views/front/Front"),
-        redirect: '/front/home',
+        component: ()=>import("../views/front/Front"),
         children: [
             {
                 path: 'home',
-                name: "前台",
-                component: () => import("@/views/front/Home"),
+                name: "Home",
+                component: () => import("../views/front/Home"),
+            },
+            {
+                path: 'person',
+                name: "Person",
+                component: () => import("../views/front/Person"),
+            },
+            {
+                path: 'video',
+                name: "Video",
+                component: () => import("../views/front/Video"),
+            },
+            {
+                path: 'videoDetail',
+                name: "VideoDetail",
+                component: () => import("../views/front/VideoDetail"),
             },
         ]
     },
-    {
-        path: '/:catchAll(.*)',// 不识别的path自动匹配404
-        name: '404',
-        component: () => import('@/views/404'),
-
-    },
-
 ]
 
 const router = createRouter({
@@ -52,7 +67,7 @@ export const resetRouter = ()=>{
 
 //注意刷新页面会重置路由
 export const setRoutes = () => {
-    const storeMenus = sessionStorage.getItem("menus")
+    const storeMenus = localStorage.getItem("menus")
     if (storeMenus) {
         //获取当前动态路由对象名称数组
         const currentRouteNames = router.getRoutes().map(v => v.name)
@@ -103,6 +118,27 @@ export const setRoutes = () => {
         }
     }
 }
+//重置就在set一次
 setRoutes();
+
+// 这里就可以进行vue-router的beforeEach拦截了
+router.beforeEach((to, from, next) =>{
+    localStorage.setItem("currentPathName", to.name)  // 设置当前的路由名称
+    store.commit("setPath")
+
+    // 未找到路由的情况
+    if (!to.matched.length) {
+        const storeMenus = localStorage.getItem("menus")
+        if (storeMenus) {
+            next("/404")
+        } else {
+            // 跳回登录页面
+            next("/login")
+        }
+    }
+    // 其他的情况都放行
+    next()
+})
+
 
 export default router
