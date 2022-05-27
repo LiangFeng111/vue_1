@@ -15,15 +15,9 @@
         </template>
       </el-input>
       <el-button type="primary" style="margin-left: 10px" @click="load">搜索</el-button>
-      <el-button type="primary" @click="add" style="margin-left: 10px"> 新增
-        <el-icon>
-          <circle-plus/>
-        </el-icon>
-      </el-button>
       <el-popconfirm
           confirm-button-text="确定"
           cancel-button-text="取消"
-          :icon="InfoFilled"
           icon-color="red"
           @confirm="deleteBatch"
           title="你确定要删除吗?">
@@ -36,28 +30,31 @@
         </template>
       </el-popconfirm>
 
-      <!--      文章信息对话框-->
-      <el-dialog  v-model="centerDialogVisible" :title="title" width="80%" center>
+      <!--      新增修改对话框-->
+      <el-dialog  v-model="centerDialogVisible" :title="title" width="30%" center>
         <el-form :model="form"  label-width="100px">
-          <el-form-item label="名称:">
+          <el-form-item label="商品名称:">
             <el-input v-model="form.name" style="width: 80%"/>
           </el-form-item>
-          <el-form-item label="文章内容:">
-            <div style="border: 1px solid #ccc">
-              <Toolbar
-                  style="border-bottom: 1px solid #ccc"
-                  :editor="editorRef"
-                  :defaultConfig="toolbarConfig"
-                  :mode="mode"
-              />
-              <Editor
-                  style=" overflow-y: hidden;min-height: 210px"
-                  v-model="valueHtml"
-                  :defaultConfig="editorConfig"
-                  :mode="mode"
-                  @onCreated="handleCreated"
-              />
-            </div>
+          <el-form-item label="商品价格:">
+            <el-input v-model="form.price" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="商品描述:">
+            <el-input v-model="form.description" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="商品单位:">
+            <el-input v-model="form.unit" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="商品存库:">
+            <el-input v-model="form.store" style="width: 80%"/>
+          </el-form-item>
+          <el-form-item label="图片:">
+            <el-upload
+                ref="upload"
+                :on-success="filesUploadSuccess"
+                action="http://localhost:9091/file">
+              <el-button type="primary">点击上传</el-button>
+            </el-upload>
           </el-form-item>
         </el-form>
 
@@ -69,14 +66,6 @@
         </template>
       </el-dialog>
     </div>
-
-    <!--    详情对话框-->
-    <el-dialog v-model="vis" title="详情" width="50%" center>
-      <!--      卡片-->
-      <el-card>
-        <div v-html="detail.content" style="min-height: 100px ;"></div>
-      </el-card>
-    </el-dialog>
 
     <!--    表格数据-->
     <div>
@@ -93,14 +82,10 @@
           style="width: 100%;">
         <el-table-column align="center" type="selection" width="40"/>
         <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
-        <el-table-column align="center" fixed prop="name" label="名称"/>
-        <el-table-column align="center"  label="文章内容">
-          <template #default="scope">
-            <el-button type="primary" @click="details(scope.row)">详情</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" prop="user" label="发布者"/>
-        <el-table-column align="center" prop="time" label="发布时间"/>
+        <el-table-column align="center" prop="goodsName" label="商品名称"/>
+        <el-table-column align="center" prop="nickname" label="用户昵称"/>
+        <el-table-column align="center" prop="num" label="商品数量"/>
+        <el-table-column align="center" prop="time" label="添加时间"/>
         <el-table-column align="center" width="150" fixed="right" label="操作">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -146,57 +131,9 @@
 <script>
 import request from "@/utils/request";
 import {ElMessage} from "element-plus";
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
-import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 export default {
-  name: "Article",
-  components: { Editor, Toolbar },
-  setup() {
-    // 编辑器实例，必须用 shallowRef
-    const editorRef = shallowRef()
-
-    // 内容 HTML
-    const valueHtml = ref('')
-
-    const toolbarConfig = {}
-    const editorConfig = { placeholder: '请输入内容...',MENU_CONF: {} }
-
-    // 组件销毁时，也及时销毁编辑器
-    onBeforeUnmount(() => {
-      const editor = editorRef.value
-      if (editor == null) return
-      editor.destroy()
-    })
-
-    const handleCreated = (editor) => {
-      editorRef.value = editor // 记录 editor 实例，重要！
-    }
-
-    //上传图片的配置
-    editorConfig.MENU_CONF['uploadImage'] = {
-      server: 'http://localhost:9091/file/editorUpload',//上传地址
-      fieldName: 'file',//设置上传参数名称
-    }
-    // 上传视频的配置
-    editorConfig.MENU_CONF['uploadVideo'] = {
-      server: 'http://localhost:9091/file/editorUpload',//上传地址
-      fieldName: 'file',//设置上传参数名称
-      // 单个文件的最大体积限制，默认为 10M
-      maxFileSize: 1000 * 1024 * 1024, // 1000M
-    }
-
-
-    return {
-      editorRef,
-      valueHtml,
-      mode: 'default', // 或 'simple'
-      toolbarConfig,
-      editorConfig,
-      handleCreated
-    };
-  },
+  name: "Cart",
   data() {
     return {
       form: {},
@@ -211,8 +148,6 @@ export default {
       tableData: [],
       title: "", //表单标题
       ids: {},
-      vis: false,//详情弹窗开/关
-      detail: {},//详情的内容
 
     }
   },
@@ -232,7 +167,7 @@ export default {
         this.message("请选择数据", 'error')
         return
       }
-      request.post('/article/deleteBatch', this.ids).then(res => {
+      request.post('/cart/deleteBatch', this.ids).then(res => {
         if (res.code === '200') {
           this.message("删除成功", 'success')
           this.load()//刷新表格数据
@@ -248,7 +183,7 @@ export default {
       this.ids = val.map(v => v.id)  // map 的作用[{id,name},{id,name}] => [id,name]
     },
     load() {
-      request.get("/article/page", {
+      request.get("/cart/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -266,15 +201,6 @@ export default {
 
 
     },
-    add() {
-      this.title = '新增文章'
-      this.valueHtml=''
-      // 显示对话框
-      this.centerDialogVisible = true
-      //清空表单内容
-      this.form = {}
-
-    },
     //提示信息
     message(msg, type) {
       ElMessage({
@@ -288,7 +214,7 @@ export default {
       this.form.content=this.valueHtml
       //如果form有id就返回ture，没有则反之
       if (this.form.id) {//更新
-        request.put("/article", this.form).then(res => {
+        request.put("/cart", this.form).then(res => {
           if (res.code === '200') {
             this.message("修改成功", 'success')
           } else {
@@ -299,8 +225,7 @@ export default {
         })
       } else {//新增
         this.form.user=JSON.parse(localStorage.getItem("user")).nickName
-        debugger
-        request.post("/article/add", this.form).then(res => {
+        request.post("/cart/add", this.form).then(res => {
           if (res.code === '200') {
             this.message("添加成功！", 'success')
             this.load()//刷新表格数据
@@ -311,6 +236,10 @@ export default {
         })
       }
 
+    },
+    //文件上传
+    filesUploadSuccess(res){
+      this.form.img = res
     },
 
     //改变当前每页的个数触发
@@ -327,13 +256,13 @@ export default {
     handleEdit(row) {
       //JSON.parse(JSON.stringify(row))表示成为独立对象
       this.valueHtml = row.content
-      this.title = "修改文章信息"
+      this.title = "修改商品信息"
       this.form = JSON.parse(JSON.stringify(row))
       this.centerDialogVisible = true
     },
     //删除触发
     handleDelete(id) {
-      request.delete("article/" + id).then(res => {
+      request.delete("cart/" + id).then(res => {
         if (res.code === '200') {
           this.message("删除成功！", 'success')
         } else {

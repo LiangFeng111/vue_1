@@ -47,6 +47,26 @@ const routes = [
                 name: "VideoDetail",
                 component: () => import("../views/front/VideoDetail"),
             },
+            {
+                path: 'article',
+                name: "FrontArticle",
+                component: () => import("../views/front/Article"),
+            },
+            {
+                path: 'articleDetail',
+                name: "ArticleDetail",
+                component: () => import("../views/front/ArticleDetail"),
+            },
+            {
+                path: 'detail',
+                name: "Detail",
+                component: () => import("../views/front/Detail"),
+            },
+            {
+                path: 'cart',
+                name: "FrontCart",
+                component: () => import("../views/front/Cart"),
+            },
         ]
     },
 ]
@@ -76,7 +96,7 @@ export const setRoutes = () => {
             const manageRoute = {
                 path: '/',
                 name: "Layout",
-                redirect: '/home',
+                redirect: '/front/home',
                 component: Layout,
                 children: [
                     {

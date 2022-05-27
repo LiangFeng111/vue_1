@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     load() {
-      this.user=JSON.parse(sessionStorage.getItem("user") || "{}")
+      this.user=JSON.parse(localStorage.getItem("user") || "{}")
       request.get("/user/"+this.user.id).then(res=>{
         this.form =res.data
       })

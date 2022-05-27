@@ -26,7 +26,7 @@ export default {
   },
   data(){
     return{
-      user:this.user=sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : "{}",
+      user:this.user=localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "{}",
     }
   },
   methods:{

@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    let userStr = sessionStorage.getItem("user") || "{}"
+    let userStr = localStorage.getItem("user") || "{}"
     this.user = JSON.parse(userStr)
 
     request.get("/user/"+this.user.id).then(res=>{

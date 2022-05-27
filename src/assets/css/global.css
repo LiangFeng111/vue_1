@@ -20,3 +20,8 @@
 .el-breadcrumb__inner.is-link  {
     color: #ffffff;
 }
+
+.icons{
+    width: 20px;
+    height: 16px;
+}

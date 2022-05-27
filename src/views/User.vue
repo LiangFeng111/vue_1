@@ -235,8 +235,7 @@ export default {
     },
     //文件上传
     filesUploadSuccess(res){
-      this.form.headImg = res.data
-      console.log(res)
+      this.form.headImg = res
     },
     load() {
       request.get("/user/page", {

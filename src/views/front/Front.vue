@@ -19,18 +19,8 @@
             router
             mode="horizontal">
           <el-menu-item index="/front/home">首页</el-menu-item>
-          <el-sub-menu index="2">
-            <template #title>选项</template>
-            <el-menu-item index="2-2">选项三</el-menu-item>
-            <el-menu-item index="2-3">选项四</el-menu-item>
-            <el-sub-menu index="2-4">
-              <template #title>选项四</template>
-              <el-menu-item index="2-4-1">item one</el-menu-item>
-              <el-menu-item index="2-4-2">item two</el-menu-item>
-              <el-menu-item index="2-4-3">item three</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
-          <el-menu-item index="3" disabled>Info</el-menu-item>
+          <el-menu-item index="/front/cart">我的购物车</el-menu-item>
+          <el-menu-item index="/front/article">文章列表</el-menu-item>
           <el-menu-item index="/front/video">视频播放</el-menu-item>
         </el-menu>
 
@@ -80,7 +70,7 @@ export default {
   name: "Front",
   data() {
     return {
-      user: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
   methods: {
