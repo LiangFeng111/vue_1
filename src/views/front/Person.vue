@@ -59,6 +59,7 @@ export default {
       })
 
     },
+    //保存
     save() {
       request.put("/user", this.form).then(res => {
         if (res.code === '200') {

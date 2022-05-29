@@ -67,6 +67,11 @@ const routes = [
                 name: "FrontCart",
                 component: () => import("../views/front/Cart"),
             },
+            {
+                path: 'orders',
+                name: "FrontOrders",
+                component: () => import("../views/front/Orders"),
+            },
         ]
     },
 ]

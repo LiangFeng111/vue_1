@@ -62,8 +62,8 @@
           row-style="text-align: center"
           @selection-change="handleSelectionChange"
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40"/>
-        <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
+        <el-table-column align="center" type="selection" width="35"/>
+        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" width="80px" label="商品图片">
           <template #default="scope">
             <el-image
@@ -123,7 +123,7 @@
       <div>
         当前已选商品总价：<span style="color: orangered">￥{{totalPrice}}</span>
       </div>
-      <el-button size="medium" style="color: white;background-color: orangered"><Component is="Coin" class="icons"></Component>结算</el-button>
+      <el-button size="medium" style="color: white;background-color: orangered" @click="settleAccount"><Component is="Coin" class="icons"></Component>结算</el-button>
     </div>
   </div>
 </template>
@@ -136,19 +136,20 @@ export default {
   name: "Cart",
   data() {
     return {
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},//用户信息
       form: {},
-      value: "",
-      centerDialogVisible: false,
-      menuDialogVis: false,
-      input: "",
-      loading: true,
-      currentPage: 1,
-      pageSize: 10,
-      total: 0,
-      tableData: [],
+      value: "",//搜索框的值
+      centerDialogVisible: false,//中间弹框
+      menuDialogVis: false,//菜单弹框
+      input: "",//输入框的值
+      loading: true,//加载
+      currentPage: 1,//当前页
+      pageSize: 10,//每页显示的条数
+      total: 0,//总条数
+      tableData: [],//表格数据
       title: "", //表单标题
-      totalPrice:0,
-      multipleSelection:{},
+      totalPrice:0,//总价
+      multipleSelection:{},//多选
     }
   },
   //created（）页面加载时调用的方法
@@ -156,22 +157,40 @@ export default {
     this.load();
   },
   methods: {
+    settleAccount(){
+      if (!this.multipleSelection.length || !this.multipleSelection) {
+        this.$message.error("请选择要结算的商品")
+        return
+      }
+      let data = {name :this.multipleSelection[0].goodsName ,totalPrice : this.totalPrice ,carts:this.multipleSelection,userId:this.user.id}
+      // debugger
+      request.post("/orders/add",data).then(res =>{
+        if (res.code === '200') {
+          this.load()
+          this.$message.success("结算成功")
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
     changeNum(row){
       request.put("/cart",JSON.parse(JSON.stringify(row))).then(res => {
         if (res.code === '200') {
+          //计算总价格
+          this.totalPrice=0
+          if (this.multipleSelection && this.multipleSelection.length){
+            this.multipleSelection.forEach(item =>{
+              // item.num = row.num//更新选中数组的数量
+              this.totalPrice += item.num * item.price
+            })
+          }
+          this.totalPrice = this.totalPrice.toFixed(2)
           // this.load()//刷新表格数据
         }else {
           this.$message.warning(res.msg)
         }
       })
-      //计算总价格
-      this.totalPrice=0
-      if (this.multipleSelection && this.multipleSelection.length){
-        this.multipleSelection.forEach(item =>{
-          this.totalPrice += item.num * item.price
-        })
-      }
-      this.totalPrice = this.totalPrice.toFixed(2)
+
     },
     //全选
     handleSelectionChange(val) {

@@ -20,6 +20,7 @@
             mode="horizontal">
           <el-menu-item index="/front/home">首页</el-menu-item>
           <el-menu-item index="/front/cart">我的购物车</el-menu-item>
+          <el-menu-item index="/front/orders">我的订单</el-menu-item>
           <el-menu-item index="/front/article">文章列表</el-menu-item>
           <el-menu-item index="/front/video">视频播放</el-menu-item>
         </el-menu>

@@ -99,8 +99,8 @@
           row-style="text-align: center"
           @selection-change="handleSelectionChange"
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40" />
-        <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
+        <el-table-column align="center" type="selection" width="35" />
+        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center"  label="头像" width="70">
           <template #default="scope">
               <el-image

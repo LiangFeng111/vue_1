@@ -7,7 +7,7 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div style="margin: 10px 0">
+    <div style="">
         <el-row :gutter="10">
           <el-col style="padding: 5px;border-radius: 10px; overflow: hidden;border: 1px solid #d4d4d4;" :span="6" v-for="item in tableData" :key="item.id">
             <div style="padding: 10px ;">

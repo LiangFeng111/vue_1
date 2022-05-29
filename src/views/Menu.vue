@@ -75,8 +75,8 @@
           row-key="id"
           default-expand-all
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40" />
-        <el-table-column fixed prop="id" label="ID" width="80" sortable/>
+        <el-table-column align="center" type="selection" width="35" />
+        <el-table-column fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" fixed prop="name"  label="名称"/>
         <el-table-column align="center" fixed prop="path"  label="路径"/>
         <el-table-column align="center" fixed prop="pagePath"  label="页面路径"/>

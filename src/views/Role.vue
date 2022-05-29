@@ -91,8 +91,8 @@
           row-style="text-align: center"
           @selection-change="handleSelectionChange"
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40"/>
-        <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
+        <el-table-column align="center" type="selection" width="35"/>
+        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" fixed prop="name" label="名称"/>
         <el-table-column align="center" prop="description" label="描述"/>
         <el-table-column align="center" width="230" fixed="right" label="操作">
@@ -155,23 +155,23 @@ export default {
       value: "",
       centerDialogVisible: false,
       menuDialogVis: false,
-      input: "",
-      loading: true,
-      currentPage: 1,
-      pageSize: 10,
-      total: 0,
-      tableData: [],
+      input: "",//输入框
+      loading: true,//表格加载状态
+      currentPage: 1,//当前页
+      pageSize: 10,//每页条数
+      total: 0,//总条数
+      tableData: [],//表格数据
       title: "", //表单标题
-      ids: {},
-      InfoFilled: InfoFilled,
-      menuData: [],
-      props: {
+      ids: {},//选中的id
+      InfoFilled: InfoFilled,//图标
+      menuData: [],//菜单数据
+      props: {//菜单树
         label: 'name',
       },
-      expands:[],
-      checks:[],
-      roleId:0,
-      roleFlag:'',
+      expands:[],//展开的节点
+      checks:[],//选中的菜单
+      roleId:0,//角色id
+      roleFlag:'',//角色类型
 
     }
   },

@@ -80,8 +80,8 @@
           row-style="text-align: center"
           @selection-change="handleSelectionChange"
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40"/>
-        <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
+        <el-table-column align="center" type="selection" width="35"/>
+        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" prop="goodsName" label="商品名称"/>
         <el-table-column align="center" prop="nickname" label="用户昵称"/>
         <el-table-column align="center" prop="num" label="商品数量"/>

@@ -85,11 +85,11 @@
           row-style="text-align: center"
           @selection-change="handleSelectionChange"
           style="width: 100%;">
-        <el-table-column align="center" type="selection" width="40"/>
-        <el-table-column align="center" fixed prop="id" label="ID" width="60" sortable/>
-        <el-table-column align="center" prop="name" label="商品名称"/>
+        <el-table-column align="center" type="selection" width="35"/>
+        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
+        <el-table-column align="center" fixed prop="name" width="150" label="商品名称"/>
         <el-table-column align="center" prop="price" label="价格"/>
-        <el-table-column align="center" prop="description" label="商品描述"/>
+        <el-table-column align="center" prop="description" label="商品描述" width="300"/>
         <el-table-column align="center" prop="unit" label="单位"/>
         <el-table-column align="center" prop="store" label="库存"/>
         <el-table-column align="center" label="图片">
@@ -106,7 +106,6 @@
         <el-table-column align="center" prop="time" label="上架时间"/>
         <el-table-column align="center" width="150" fixed="right" label="操作">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
               <el-button type="success" @click="handleEdit(scope.row)">编辑
                 <el-icon>
                   <edit/>
@@ -126,7 +125,6 @@
                   </el-button>
                 </template>
               </el-popconfirm>
-            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -192,10 +190,9 @@ export default {
         } else {
           this.message(res.msg, 'error')
         }
-
       })
-
     },
+
     //全选
     handleSelectionChange(val) {
       this.ids = val.map(v => v.id)  // map 的作用[{id,name},{id,name}] => [id,name]

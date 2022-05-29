@@ -33,14 +33,14 @@ export default {
         volume: 0.3, //默认音量大小
         control: true, //是否显示控制
         controlBtns: [
-          "audioTrack",
-          "quality",
-          "speedRate",
-          "volume",
-          "setting",
-          "pip",
-          "pageFullScreen",
-          "fullScreen",
+          "audioTrack",//音轨
+          "quality",//清晰度
+          "speedRate",//倍速
+          "volume",//音量
+          "setting",//设置
+          "pip",//画中画
+          "pageFullScreen",//全屏
+          "fullScreen",//全屏
         ], //显示所有按钮,
       }),
 
