@@ -21,9 +21,9 @@
           cancel-button-text="取消"
           icon-color="red"
           @confirm="deleteBatch"
-          title="你确定要删除吗?">
+          title="你确定要取消吗?">
         <template #reference>
-          <el-button type="danger" size="medium">批量删除
+          <el-button type="danger" size="medium">批量取消
             <el-icon>
               <remove/>
             </el-icon>
@@ -123,21 +123,20 @@
             <el-button type="primary" @click="viewGoods(scope.row.id)">查看商品</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" width="150" fixed="right" label="操作">
+        <el-table-column align="center" width="220" fixed="right" label="操作">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-button type="success" @click="pay(scope.row)">付款</el-button>
+              <el-button type="primary" @click="pay(scope.row)" :disabled="scope.row.state !== '待付款'">支 付</el-button>
+              <el-button type="danger"  :disabled="scope.row.state !== '已支付'">退款</el-button>
               <el-popconfirm
                   confirm-button-text="确定"
                   cancel-button-text="取消"
                   icon-color="red"
                   @confirm="handleDelete(scope.row.id)"
-                  title="你确定要删除吗?">
+                  title="你确定要取消吗?">
                 <template #reference>
                   <el-button type="danger">取消订单</el-button>
                 </template>
               </el-popconfirm>
-            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -187,6 +186,9 @@ export default {
   methods: {
     pay(row){
 
+      const url = `http://localhost:9091/alipay/pay?subject=${row.name}&traceNo=${row.no}&totalAmount=${row.totalPrice}`
+      window.open(url);  //  得到一个url，这个url就是支付宝支付的界面url, 新窗口打开这个url就可以了
+      console.log(url)
     },
 
     //查看商品
@@ -205,7 +207,7 @@ export default {
       }
       request.post('/orders/deleteBatch', this.ids).then(res => {
         if (res.code === '200') {
-          this.message("删除成功", 'success')
+          this.message("取消成功", 'success')
           this.load()//刷新表格数据
         } else {
           this.message(res.msg, 'error')
@@ -302,7 +304,7 @@ export default {
     handleDelete(id) {
       request.delete("orders/" + id).then(res => {
         if (res.code === '200') {
-          this.message("删除成功！", 'success')
+          this.message("取消成功！", 'success')
         } else {
           this.message(res.msg, 'error')
         }

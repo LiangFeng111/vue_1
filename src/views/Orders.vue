@@ -128,12 +128,6 @@
         </el-table-column>
         <el-table-column align="center" width="150" fixed="right" label="操作">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-button type="success" @click="handleEdit(scope.row)">编辑
-                <el-icon>
-                  <edit/>
-                </el-icon>
-              </el-button>
               <el-popconfirm
                   confirm-button-text="确定"
                   cancel-button-text="取消"
@@ -148,7 +142,6 @@
                   </el-button>
                 </template>
               </el-popconfirm>
-            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -297,14 +290,6 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.load();
-    },
-    //编辑触发
-    handleEdit(row) {
-      //JSON.parse(JSON.stringify(row))表示成为独立对象
-      this.valueHtml = row.content
-      this.title = "修改商品信息"
-      this.form = JSON.parse(JSON.stringify(row))
-      this.centerDialogVisible = true
     },
     //删除触发
     handleDelete(id) {
