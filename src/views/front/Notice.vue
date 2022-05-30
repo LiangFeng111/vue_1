@@ -15,11 +15,11 @@
       <el-button type="primary" style="margin-left: 10px" @click="load" size="30px">搜索</el-button>
     </div>
 
-    <!--   文章内容 -->
+    <!--   公告内容 -->
     <div style="margin: 10px 0">
       <div style="padding: 20px 0;border-bottom: 1px dashed #808080;" v-for="item in tableData" :key="item.id">
         <div style="font-size: 20px; color: #00cdff;">
-          <span style="cursor: pointer" @click="this.$router.push('/front/ArticleDetail?id='+item.id)"> {{item.name}}</span>
+          <span style="cursor: pointer" @click="this.$router.push('/front/noticeDetail?id='+item.id)"> {{item.name}}</span>
         </div>
         <div style="padding-top: 10px;color: #909090">
           <el-icon><User /></el-icon>
@@ -54,7 +54,7 @@ import {ElMessage} from "element-plus";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
 export default {
-  name: "Article",
+  name: "Notice",
   data() {
     return {
       form: {},
@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     load() {
-      request.get("/article/page", {
+      request.get("/notice/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,

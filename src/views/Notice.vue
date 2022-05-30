@@ -36,13 +36,13 @@
         </template>
       </el-popconfirm>
 
-      <!--      文章信息对话框-->
+      <!--      文章公告信息对话框-->
       <el-dialog  v-model="centerDialogVisible" :title="title" width="80%" center>
         <el-form :model="form"  label-width="100px">
           <el-form-item label="名称:">
             <el-input v-model="form.name" style="width: 80%"/>
           </el-form-item>
-          <el-form-item label="文章内容:">
+          <el-form-item label="公告内容:">
             <div style="border: 1px solid #ccc">
               <Toolbar
                   style="border-bottom: 1px solid #ccc"
@@ -94,7 +94,7 @@
         <el-table-column align="center" type="selection" width="35"/>
         <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" fixed prop="name" label="名称"/>
-        <el-table-column align="center"  label="文章内容">
+        <el-table-column align="center"  label="公告内容">
           <template #default="scope">
             <el-button type="primary" @click="details(scope.row)">详情</el-button>
           </template>
@@ -151,7 +151,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 export default {
-  name: "Article",
+  name: "Notice",
   components: { Editor, Toolbar },
   setup() {
     // 编辑器实例，必须用 shallowRef
@@ -232,7 +232,7 @@ export default {
         this.message("请选择数据", 'error')
         return
       }
-      request.post('/article/deleteBatch', this.ids).then(res => {
+      request.post('/notice/deleteBatch', this.ids).then(res => {
         if (res.code === '200') {
           this.message("删除成功", 'success')
           this.load()//刷新表格数据
@@ -248,7 +248,7 @@ export default {
       this.ids = val.map(v => v.id)  // map 的作用[{id,name},{id,name}] => [id,name]
     },
     load() {
-      request.get("/article/page", {
+      request.get("/notice/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -288,7 +288,7 @@ export default {
       this.form.content=this.valueHtml
       //如果form有id就返回ture，没有则反之
       if (this.form.id) {//更新
-        request.put("/article", this.form).then(res => {
+        request.put("/notice", this.form).then(res => {
           if (res.code === '200') {
             this.message("修改成功", 'success')
           } else {
@@ -300,7 +300,7 @@ export default {
       } else {//新增
         this.form.user=JSON.parse(localStorage.getItem("user")).nickName
         debugger
-        request.post("/article/add", this.form).then(res => {
+        request.post("/notice/add", this.form).then(res => {
           if (res.code === '200') {
             this.message("添加成功！", 'success')
             this.load()//刷新表格数据
@@ -333,7 +333,7 @@ export default {
     },
     //删除触发
     handleDelete(id) {
-      request.delete("article/" + id).then(res => {
+      request.delete("notice/" + id).then(res => {
         if (res.code === '200') {
           this.message("删除成功！", 'success')
         } else {

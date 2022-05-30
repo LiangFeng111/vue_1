@@ -48,14 +48,14 @@ const routes = [
                 component: () => import("../views/front/VideoDetail"),
             },
             {
-                path: 'article',
-                name: "FrontArticle",
-                component: () => import("../views/front/Article"),
+                path: 'notice',
+                name: "FrontNotice",
+                component: () => import("../views/front/Notice"),
             },
             {
-                path: 'articleDetail',
-                name: "ArticleDetail",
-                component: () => import("../views/front/ArticleDetail"),
+                path: 'noticeDetail',
+                name: "NoticeDetail",
+                component: () => import("../views/front/NoticeDetail"),
             },
             {
                 path: 'detail',
