@@ -100,10 +100,9 @@ export default {
                 localStorage.setItem("menus",JSON.stringify(res.data.menus)) //存储菜单信息到浏览器
                 //动态设置当前用户的路由
                 setRoutes()
-                if (res.data.role==='admin'){
+                if (res.data.role==='SuperAdmin' || res.data.role==='Admin'){
                   this.$router.push("/home")//登录跳转到主页
-                }else {
-
+                }else{
                   this.$router.push("/front/home")//登录跳转到主页
                 }
 

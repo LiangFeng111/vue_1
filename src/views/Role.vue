@@ -94,11 +94,11 @@
         <el-table-column align="center" type="selection" width="35"/>
         <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
         <el-table-column align="center" fixed prop="name" label="名称"/>
-        <el-table-column align="center" prop="description" label="描述"/>
+        <el-table-column align="center" prop="description"  label="描述"/>
         <el-table-column align="center" width="230" fixed="right" label="操作">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-button type="info" @click="selectMenu(scope.row)">分配菜单</el-button>
+            <div style="display: flex; align-items: center" v-if=" scope.row.flag !== 'SuperAdmin'">
+              <el-button type="info" @click="selectMenu(scope.row)" >分配菜单</el-button>
               <el-button type="success" @click="handleEdit(scope.row)">编辑
                 <el-icon>
                   <edit/>
@@ -112,7 +112,7 @@
                   @confirm="handleDelete(scope.row.id)"
                   title="你确定要删除吗?">
                 <template #reference>
-                  <el-button type="danger">删除
+                  <el-button type="danger" >删除
                     <el-icon>
                       <delete/>
                     </el-icon>
@@ -151,6 +151,7 @@ export default {
   },
   data() {
     return {
+      user:this.user=localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "{}",
       form: {},
       value: "",
       centerDialogVisible: false,
@@ -200,6 +201,7 @@ export default {
     //全选
     handleSelectionChange(val) {
       this.ids = val.map(v => v.id)  // map 的作用[{id,name},{id,name}] => [id,name]
+      console.log(this.user.role)
     },
     load() {
       request.get("/role/page", {

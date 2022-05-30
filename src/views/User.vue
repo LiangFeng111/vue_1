@@ -116,8 +116,9 @@
         <el-table-column align="center" fixed prop="username" width="80" label="用户名"/>
         <el-table-column align="center" width="80" label="角色:">
           <template #default="scope">
-            <span v-if="scope.row.role ==='admin'">管理员</span>
-            <span v-if="scope.row.role ==='user'">普通用户</span>
+            <span v-if="scope.row.role ==='Admin'">管理员</span>
+            <span v-if="scope.row.role ==='User'">普通用户</span>
+
           </template>
         </el-table-column>
         <el-table-column align="center" prop="nickName" width="80" label="昵称"/>
