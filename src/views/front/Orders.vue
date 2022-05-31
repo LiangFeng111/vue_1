@@ -21,9 +21,9 @@
           cancel-button-text="取消"
           icon-color="red"
           @confirm="deleteBatch"
-          title="你确定要取消吗?">
+          title="你确定要批量删除吗?">
         <template #reference>
-          <el-button type="danger" size="medium">批量取消
+          <el-button type="danger" size="medium">批量删除
             <el-icon>
               <remove/>
             </el-icon>
@@ -126,7 +126,7 @@
         <el-table-column align="center" width="220" fixed="right" label="操作">
           <template #default="scope">
               <el-button type="primary" @click="pay(scope.row)" :disabled="scope.row.state !== '待付款'">支 付</el-button>
-              <el-button type="danger"  :disabled="scope.row.state !== '已支付'">退款</el-button>
+              <el-button type="danger"  :disabled="scope.row.state !== '已支付'" @click="returnPay(scope.row)">退款</el-button>
               <el-popconfirm
                   confirm-button-text="确定"
                   cancel-button-text="取消"
@@ -134,7 +134,7 @@
                   @confirm="handleDelete(scope.row.id)"
                   title="你确定要取消吗?">
                 <template #reference>
-                  <el-button type="danger">取消订单</el-button>
+                  <el-button type="danger" v-if="scope.row.state ==='待付款'">取消订单</el-button>
                 </template>
               </el-popconfirm>
           </template>
@@ -185,10 +185,20 @@ export default {
   },
   methods: {
     pay(row){
-
       const url = `http://localhost:9091/alipay/pay?subject=${row.name}&traceNo=${row.no}&totalAmount=${row.totalPrice}`
       window.open(url);  //  得到一个url，这个url就是支付宝支付的界面url, 新窗口打开这个url就可以了
-      console.log(url)
+    },
+    returnPay(row){
+      const url = `http://localhost:9091/alipay/return?totalAmount=${row.totalPrice}&alipayTraceNo=${row.alipayNo}&traceNo=${row.no}`
+      request.get(url).then(res => {
+        if(res.code === '200') {
+          this.$message.success("退款成功")
+          this.load()
+        }  else {
+          this.$message.error("退款失败")
+        }
+
+      })
     },
 
     //查看商品
@@ -207,7 +217,7 @@ export default {
       }
       request.post('/orders/deleteBatch', this.ids).then(res => {
         if (res.code === '200') {
-          this.message("取消成功", 'success')
+          this.message("删除成功", 'success')
           this.load()//刷新表格数据
         } else {
           this.message(res.msg, 'error')
