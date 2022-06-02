@@ -29,42 +29,6 @@
           </el-button>
         </template>
       </el-popconfirm>
-
-      <!--      新增修改对话框-->
-      <el-dialog  v-model="centerDialogVisible" :title="title" width="30%" center>
-        <el-form :model="form"  label-width="100px">
-          <el-form-item label="商品名称:">
-            <el-input v-model="form.name" style="width: 80%"/>
-          </el-form-item>
-          <el-form-item label="商品价格:">
-            <el-input v-model="form.price" style="width: 80%"/>
-          </el-form-item>
-          <el-form-item label="商品描述:">
-            <el-input v-model="form.description" style="width: 80%"/>
-          </el-form-item>
-          <el-form-item label="商品单位:">
-            <el-input v-model="form.unit" style="width: 80%"/>
-          </el-form-item>
-          <el-form-item label="商品存库:">
-            <el-input v-model="form.store" style="width: 80%"/>
-          </el-form-item>
-          <el-form-item label="图片:">
-            <el-upload
-                ref="upload"
-                :on-success="filesUploadSuccess"
-                action="http://localhost:9091/file">
-              <el-button type="primary">点击上传</el-button>
-            </el-upload>
-          </el-form-item>
-        </el-form>
-
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取消</el-button>
-            <el-button :plain="true" type="primary" @click="save">确认</el-button>
-          </span>
-        </template>
-      </el-dialog>
     </div>
 
     <!--    表格数据-->
@@ -86,14 +50,8 @@
         <el-table-column align="center" prop="nickname" label="用户昵称"/>
         <el-table-column align="center" prop="num" label="商品数量"/>
         <el-table-column align="center" prop="time" label="添加时间"/>
-        <el-table-column align="center" width="150" fixed="right" label="操作">
+        <el-table-column align="center" width="140" fixed="right" label="操作">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-button type="success" @click="handleEdit(scope.row)">编辑
-                <el-icon>
-                  <edit/>
-                </el-icon>
-              </el-button>
               <el-popconfirm
                   confirm-button-text="确定"
                   cancel-button-text="取消"
@@ -108,7 +66,6 @@
                   </el-button>
                 </template>
               </el-popconfirm>
-            </div>
           </template>
         </el-table-column>
       </el-table>

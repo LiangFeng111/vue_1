@@ -1,33 +1,58 @@
 <template>
   <div style="padding: 10px">
-    <el-row :gutter="10" :span="10" style="margin-bottom: 20px">
-      <el-col :span="6">
-        <el-card style="color:#409EFF;">
-          <div ><el-icon><Avatar /></el-icon>用户总数</div>
-          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">
-            100
+<!--    <el-row :gutter="10" :span="10" style="margin-bottom: 20px">-->
+<!--      <el-col :span="6">-->
+<!--        <el-card style="color:#409EFF;">-->
+<!--          <div ><el-icon><Avatar /></el-icon>用户总数</div>-->
+<!--          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">-->
+<!--            100-->
+<!--          </div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+<!--      <el-col :span="6">-->
+<!--        <el-card  style="color:#F56C6C;">-->
+<!--          <div><el-icon><CreditCard /></el-icon>销售总量</div>-->
+<!--          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">100000000￥</div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+<!--      <el-col :span="6">-->
+<!--        <el-card  style="color:#67C23A;">-->
+<!--          <div><el-icon><Coin /></el-icon>收益总额</div>-->
+<!--          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">3000000￥</div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+<!--      <el-col :span="6">-->
+<!--        <el-card  style="color:#E6A23C;">-->
+<!--          <div><el-icon><Shop /></el-icon>门店总数</div>-->
+<!--          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">100</div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
+    <el-card>
+      <!--    公告内容-->
+      <div>
+        <div>
+          <div style="font-size: 20px; color: #00cdff;">
+            <span> {{ noticeOne.name }}</span>
           </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card  style="color:#F56C6C;">
-          <div><el-icon><CreditCard /></el-icon>销售总量</div>
-          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">100000000￥</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card  style="color:#67C23A;">
-          <div><el-icon><Coin /></el-icon>收益总额</div>
-          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">3000000￥</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card  style="color:#E6A23C;">
-          <div><el-icon><Shop /></el-icon>门店总数</div>
-          <div style="padding: 10px 0 ;text-align: center;font-weight: bold">100</div>
-        </el-card>
-      </el-col>
-    </el-row>
+          <div style="margin: 15px 0;color: #909090">
+            <el-icon>
+              <User/>
+            </el-icon>
+            <span>{{ noticeOne.user }}</span>
+            <el-icon style="margin-left: 10px">
+              <Timer/>
+            </el-icon>
+            <span>{{ noticeOne.time }}</span>
+          </div>
+        </div>
+        <div>
+          <el-card style="margin-bottom: 10px">
+            <div v-html="noticeOne.content" style="min-height: 100px ;"></div>
+          </el-card>
+        </div>
+      </div>
+    </el-card>
     <el-row :gutter="10">
       <el-col :span="12">
         <div id="line" style="width: 500px ;height: 400px"/>
@@ -43,12 +68,26 @@
 <script>
 import * as echarts from 'echarts'
 import request from "@/utils/request";
+import Cart from "@/views/front/Cart";
 
 
 export default {
   name: "Home",
+  components: {Cart},
   data() {
-    return {}
+    return {
+      noticeOne:{}
+    }
+  },
+  methods:{
+    load(){
+      request.get("/notice").then(res => {
+        this.noticeOne = res.data[0]
+      })
+    }
+  },
+  created() {
+    this.load();
   },
   mounted() {//页面元素渲染之后触发
 
@@ -77,25 +116,15 @@ export default {
       },
       series: [
         {
-          name:"瑞星咖啡",
+          name:"用户",
           data: [],
           type: 'line'
         },
         {
-          name:"瑞星咖啡",
+          name:"用户",
           data: [],
           type: 'bar'
         },
-        {
-          name:"星巴克",
-          data: [],
-          type: 'line'
-        },
-        {
-          name:"星巴克",
-          data: [],
-          type: 'bar'
-        }
       ],
       emphasis: {
         itemStyle: {
@@ -121,7 +150,7 @@ export default {
       },
       series: [
         {
-          name:"星巴克",
+          name:"用户",
           type: 'pie',
           radius: '50%',
           label: {   //饼图上的文本标签
@@ -158,8 +187,6 @@ export default {
       //填空
       option.series[0].data = res.data
       option.series[1].data = res.data
-      option.series[2].data = res.data
-      option.series[3].data = res.data
       //数据准备完毕之后在填充
       myChart.setOption(option);
       pieOption.series[0].data = [

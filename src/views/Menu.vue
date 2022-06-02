@@ -235,7 +235,6 @@ export default {
           }
         })
       }
-
     },
     handleEdit(row){
       //JSON.parse(JSON.stringify(row))表示成为独立对象

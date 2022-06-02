@@ -38,16 +38,6 @@ const routes = [
                 component: () => import("../views/front/Person"),
             },
             {
-                path: 'video',
-                name: "Video",
-                component: () => import("../views/front/Video"),
-            },
-            {
-                path: 'videoDetail',
-                name: "VideoDetail",
-                component: () => import("../views/front/VideoDetail"),
-            },
-            {
                 path: 'notice',
                 name: "FrontNotice",
                 component: () => import("../views/front/Notice"),
@@ -71,6 +61,11 @@ const routes = [
                 path: 'orders',
                 name: "FrontOrders",
                 component: () => import("../views/front/Orders"),
+            },
+            {
+                path: 'collect',
+                name: "Collect",
+                component: () => import("../views/front/Collect"),
             },
         ]
     },

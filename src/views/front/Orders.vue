@@ -117,7 +117,7 @@
         <el-table-column align="center" prop="totalPrice" label="总金额"/>
         <el-table-column align="center" prop="state" label="状态"/>
         <el-table-column align="center" prop="time" label="下单时间"/>
-        <el-table-column align="center" prop="pay_time" label="付款时间"/>
+        <el-table-column align="center" prop="paymentTime" label="付款时间"/>
         <el-table-column align="center" label="查看商品">
           <template #default="scope">
             <el-button type="primary" @click="viewGoods(scope.row.id)">查看商品</el-button>

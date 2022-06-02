@@ -22,7 +22,7 @@
           <el-menu-item index="/front/notice">公告列表</el-menu-item>
           <el-menu-item index="/front/cart">我的购物车</el-menu-item>
           <el-menu-item index="/front/orders">我的订单</el-menu-item>
-          <el-menu-item index="/front/video">视频播放</el-menu-item>
+          <el-menu-item index="/front/collect">我的收藏</el-menu-item>
         </el-menu>
 
 

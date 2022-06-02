@@ -17,9 +17,15 @@
             <span style="margin-left: 10px;font-size: 18px">{{ goods.unit }}</span>
           </div>
           <div class="item1" style="margin-top: 30px">
-            <el-button style="background-color: red; color: white" size="large" @click="addCart">
-              <component is="Wallet" style="width: 20px;height: 17px"/>
-              直接购买
+            <el-button style="background-color: red; color: white" size="large" @click="addCollect">
+              <div v-if="ifCollect===1">
+                <component is="StarFilled"  style="width: 20px;height: 17px"/>
+                已收藏
+              </div>
+              <div v-else>
+                <component is="Star"  style="width: 20px;height: 17px"/>
+                收藏
+              </div>
             </el-button>
             <el-button style="background-color: red; color: white" size="large" @click="addCart">
               <component is="ShoppingCart" style="width: 20px;height: 17px"/>
@@ -135,6 +141,7 @@ export default {
       comments: {},
       commentForm: {},
       centerDialogVisible: false,
+      ifCollect:0,
     }
   },
   created() {
@@ -198,7 +205,16 @@ export default {
       request.get("/goods/" + this.id).then(res => {
         this.goods = res.data
       })
+      console.log(!this.user)
+      if (this.user){
+        request.post("/cart/ifCollect/"+this.id+"/"+this.user.id).then(res =>{
+          this.ifCollect=res.data.ifCollect
+        })
+      }else {
+        this.ifCollect=2
+      }
     },
+    //加入购物车
     addCart(){
       if (!this.user.id) {
         this.$message.warning("请登录后操作")
@@ -214,7 +230,34 @@ export default {
         }
       })
     },
+    //收藏
+    addCollect(){
+      if (!this.user.id) {
+        this.$message.warning("请登录后操作")
+        return
+      }
+      let collect={goodsId:this.id,userId:this.user.id}
+      if (this.ifCollect===0){
+        request.post("/cart/addCollect",collect).then(res =>{
+          if (res.code === '200') {
+            this.$message.success("收藏成功")
+            this.load()
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+      }else {
+        request.post("/cart/cancelCollect",collect).then(res =>{
+          if (res.code === '200') {
+            this.$message.success("已取消收藏")
+            this.load()
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+      }
 
+    },
   },
 }
 </script>
