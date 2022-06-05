@@ -52,7 +52,7 @@
             <el-input v-model="form.nickName" style="width: 80%"/>
           </el-form-item>
           <el-form-item label="角色:" >
-            <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 80%">
+            <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 80%" :disabled=" user.role !== 'SuperAdmin'">
               <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag"></el-option>
             </el-select>
           </el-form-item>
@@ -118,6 +118,7 @@
           <template #default="scope">
             <span v-if="scope.row.role ==='Admin'">管理员</span>
             <span v-if="scope.row.role ==='User'">普通用户</span>
+            <span v-if="scope.row.role ==='SuperAdmin'">超级管理员</span>
 
           </template>
         </el-table-column>
@@ -175,6 +176,7 @@ export default {
   },
   data() {
     return {
+      user:this.user=localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "{}",
       form: {},
       options:[
         {
@@ -210,6 +212,7 @@ export default {
   },
   //created（）页面加载时调用的方法
   created() {
+    console.log(this.user.role)
     this.load();
   },
   methods: {

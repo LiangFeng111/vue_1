@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div style="height: 50px;background-color:#545c64; line-height: 50px; display: flex">
-      <div style="width: 100px ;padding-left: 30px; font-weight: bold; color: #00cdff">后台管理</div>
+      <div style="width: 100px ;padding-left: 20px;  font-weight: bold; color: #00cdff">喜淘网管理</div>
       <div style="flex: 1; height: 50px" >
         <div>
           <!--    页签-->
@@ -13,7 +13,7 @@
           </el-breadcrumb>
         </div>
       </div>
-
+      <span style="color: #00cdff; cursor: pointer;margin-right: 10px" @click="home1">前台首页</span>
       <div style="text-align: center;margin-right: 20px">
         <el-image
             style="width: 30px; height: 30px ;margin-top: 10px; margin-right: 1px; border-radius: 30px;"
@@ -63,6 +63,13 @@
       exit(){
         this.$store.commit("logout")
         this.message("退出成功",'success')
+      },
+      //前台首页
+      home1(){
+        const newpage = this.$router.resolve({
+          path: '/front/home',  // 跳转的页面路由
+        })
+        window.open(newpage.href, '_blank')
       },
 
       //提示信息

@@ -1,14 +1,15 @@
 <template>
   <div style="width: 100%; height: 100vh; background-image: linear-gradient(to bottom right ,#FC466B ,#3F5EF8);  overflow: hidden ;">
     <div class="loginPart">
-      <div style="color: #ffffff ; font-size: 30px; text-align: center ; padding: 10px">用户注册</div>
+      <div style="color: #86e390 ; font-size: 30px; text-align: center ;">喜淘网</div>
+      <div style="color: #ffffff ; font-size: 20px; text-align: center ; padding: 10px">用户注册</div>
       <div style="width: 200px;margin: 0 auto">
         <el-form ref="formRef"
                  :rules="rules"
                  :model="form"
                  label-width="auto">
-          <el-form-item prop="username">
-            <el-input v-model="form.username">
+          <el-form-item prop="username" >
+            <el-input v-model="form.username" placeholder="请输入账号">
               <template #prefix>
                 <el-icon>
                   <user-filled/>
@@ -16,8 +17,8 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item prop="password">
-            <el-input v-model="form.password" show-password>
+          <el-form-item prop="password" >
+            <el-input v-model="form.password" show-password placeholder="请输入密码">
               <template #prefix>
                 <el-icon>
                   <lock/>
@@ -26,7 +27,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="confirm">
-            <el-input v-model="form.confirm" show-password>
+            <el-input v-model="form.confirm" show-password placeholder="请二次输入密码">
               <template #prefix>
                 <el-icon>
                   <lock/>

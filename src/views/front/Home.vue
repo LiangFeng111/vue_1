@@ -1,7 +1,22 @@
 <template>
   <div>
+    <!--    查询-->
+    <div style="margin-bottom: 10px;margin-top: 10px">
+      <el-input v-model="input"
+                size="medium"
+                placeholder="查询名称"
+                style="width: 200px"
+                clearable>
+        <template #suffix>
+          <el-icon>
+            <search/>
+          </el-icon>
+        </template>
+      </el-input>
+      <el-button type="primary" size="medium" style="margin-left: 10px" @click="load">搜索</el-button>
+    </div>
     <div style="margin: 10px 0">
-      <el-carousel height="450px" :interval="10000">
+      <el-carousel height="300px" :interval="10000">
         <el-carousel-item v-for="item in imgs" :key="item">
           <img style="height: 100%;width: 100%" :src="item"  alt="图片已损坏" />{{ item }}
         </el-carousel-item>

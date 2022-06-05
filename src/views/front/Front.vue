@@ -7,14 +7,14 @@
           <img src="../../assets/logo1.png" style="width: 60px; height: 60px" />
         </div>
         <div style="flex: 1">
-          <span>欢迎来到商城</span>
+          <span></span>
         </div>
       </div>
       <div style="flex: 1">
         <!--      菜单导航-->
         <el-menu
             style="height: 100%"
-            :default-active="'1'"
+            :default-active="'/front/home'"
             class="el-menu-demo"
             router
             mode="horizontal">

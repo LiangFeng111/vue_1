@@ -1,7 +1,8 @@
 <template>
   <div style="width: 100%; height: 100vh; background-image: linear-gradient(to bottom right ,#FC466B ,#3F5EF8); overflow: hidden">
     <div class="loginPart">
-      <div style="color: #ffffff ; font-size: 30px; text-align: center ; padding: 10px">用户登录</div>
+      <div style="color: #86e390 ; font-size: 30px; text-align: center ;">喜淘网</div>
+      <div style="color: #ffffff ; font-size: 20px; text-align: center ; padding: 10px">用户登录</div>
       <div style="width: 250px;margin: 0 auto">
         <el-form :model="form"
                  :rules="rules"

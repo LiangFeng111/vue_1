@@ -273,7 +273,7 @@ export default {
             this.message("绑定成功!","success")
             this.menuDialogVis =false
             // 操作管理员角色后需要重新登录
-            if (this.roleFlag === 'admin') {
+            if (this.roleFlag === 'admin'|| this.roleFlag==='SuperAdmin') {
               this.$store.commit("logout")
             }
           }else {

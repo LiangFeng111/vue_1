@@ -75,7 +75,7 @@
     <!--    表格数据-->
     <div>
       <el-table
-          height="67vh"
+          height="75vh"
           header-cell-class-name="headerBag"
           :data="tableData"
           stripe
@@ -86,7 +86,7 @@
           @selection-change="handleSelectionChange"
           style="width: 100%;">
         <el-table-column align="center" type="selection" width="35"/>
-        <el-table-column align="center" fixed prop="id" label="ID" width="40" sortable/>
+        <el-table-column align="center" fixed prop="id" label="ID" width="50" sortable/>
         <el-table-column align="center" fixed prop="name" width="150" label="商品名称"/>
         <el-table-column align="center" prop="price" label="价格"/>
         <el-table-column align="center" prop="description" label="商品描述" width="300"/>
